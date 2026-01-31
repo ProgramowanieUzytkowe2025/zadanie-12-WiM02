@@ -33,18 +33,21 @@ export function AppCalculator() {
     useEffect(() => {
         const zapisanaHistoria = sessionStorage.getItem('historia');
 
-        if (zapisanaHistoria) {
-            const parsedHistoria = JSON.parse(zapisanaHistoria);
-            setHistoria(parsedHistoria);
+        if (!zapisanaHistoria) return;
 
-            if (parsedHistoria.length > 0) {
-                const ostatniElement = parsedHistoria[parsedHistoria.length - 1];
-                setLiczbaA(ostatniElement.a);
-                setLiczbaB(ostatniElement.b);
-                setWynik(ostatniElement.wynik);
-            }
-        }
+        const parsedHistoria = JSON.parse(zapisanaHistoria);
+
+        if (parsedHistoria.length === 0) return;
+
+        const ostatniElement = parsedHistoria[parsedHistoria.length - 1];
+
+        setHistoria(parsedHistoria);
+
+        setLiczbaA(ostatniElement.a);
+        setLiczbaB(ostatniElement.b);
+        setWynik(ostatniElement.wynik);
     }, []);
+
 
     useEffect(() => {
         sessionStorage.setItem('historia', JSON.stringify(historia));
